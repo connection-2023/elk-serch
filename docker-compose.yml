@@ -1,7 +1,6 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
   # The 'setup' service runs a one-off script which initializes users inside
   # Elasticsearch — such as 'logstash_internal' and 'kibana_system' — with the
   # values of the passwords defined in the '.env' file. It also creates the
@@ -41,6 +40,8 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - kibana
+      - logstash
 
   elasticsearch:
     build:
@@ -75,6 +76,8 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./logstash/test_template.json:/usr/share/logstash/test_template.json
+
     ports:
       - 5044:5044
       - 50000:50000/tcp

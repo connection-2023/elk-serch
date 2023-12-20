@@ -1,0 +1,85 @@
+{
+  "priority": 1,
+  "index_patterns": ["lecturer"],
+  "template": {
+    "settings": {
+      "index": {
+        "analysis": {
+          "tokenizer": {
+            "my_nori_tokenizer": {
+              "type": "nori_tokenizer",
+              "decompound_mode": "mixed",
+              "discard_punctuation": "true"
+            }
+          },
+          "analyzer": {
+            "my_nori_analyzer": {
+              "type": "custom",
+              "tokenizer": "my_nori_tokenizer",
+              "filter": ["lowercase", "stop"],
+              "char_filter": ["html_strip"]
+            }
+          }
+        }
+      }
+    },
+    "mappings": {
+      "properties": {
+        "affiliation": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "id": {
+          "type": "integer"
+        },
+        "nickname": {
+          "type": "text",
+          "analyzer": "my_nori_analyzer"
+        },
+        "profilecardimageurl": {
+          "type": "text"
+        },
+        "genres": {
+          "properties": {
+            "genre": {
+              "type": "text",
+              "analyzer": "my_nori_analyzer"
+            },
+            "categoryId": {
+              "type": "text"
+            }
+          }
+        },
+        "regions": {
+          "properties": {
+            "regionId": {
+              "type": "integer"
+            },
+            "administrativeDistrict": {
+              "type": "text",
+              "analyzer": "my_nori_analyzer"
+            },
+            "district": {
+              "type": "text",
+              "analyzer": "my_nori_analyzer"
+            }
+          }
+        },
+        "reviewcount": {
+          "type": "integer"
+        },
+        "stars": {
+          "type": "integer"
+        },
+        "updatedat": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
