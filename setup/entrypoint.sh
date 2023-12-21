@@ -5,7 +5,6 @@ set -o pipefail
 
 source "${BASH_SOURCE[0]%/*}"/lib.sh
 
-
 # --------------------------------------------------------
 # Users declarations
 
@@ -116,4 +115,5 @@ for user in "${!users_passwords[@]}"; do
 		sublog 'User does not exist, creating'
 		create_user "$user" "${users_passwords[$user]}" "${users_roles[$user]}"
 	fi
+
 done
