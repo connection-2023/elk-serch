@@ -65,7 +65,7 @@
                 "nori": {
                   "type": "text",
                   "analyzer": "my_nori_analyzer",
-                  "search_analyzer": "my_ngram_analyzer"
+                  "search_analyzer": "my_nori_analyzer"
                 },
                 "ngram": {
                   "type": "text",
@@ -79,25 +79,19 @@
         "id": {
           "type": "long"
         },
-        "isgroup": {
+        "isGroup": {
           "type": "boolean"
         },
-        "lectureimages_string": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
-            }
-          }
+        "lectureImages": {
+          "type": "text"
         },
-        "lecturemethod": {
+        "lectureMethod": {
           "type": "text",
           "fields": {
             "nori": {
               "type": "text",
               "analyzer": "my_nori_analyzer",
-              "search_analyzer": "my_ngram_analyzer"
+              "search_analyzer": "my_nori_analyzer"
             },
             "ngram": {
               "type": "text",
@@ -192,7 +186,7 @@
             "nori": {
               "type": "text",
               "analyzer": "my_nori_analyzer",
-              "search_analyzer": "my_ngram_analyzer"
+              "search_analyzer": "my_nori_analyzer"
             },
             "ngram": {
               "type": "text",
