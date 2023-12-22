@@ -1,0 +1,210 @@
+{
+  "priority": 1,
+  "index_patterns": ["lecture"],
+  "template": {
+    "settings": {
+      "index": {
+        "analysis": {
+          "tokenizer": {
+            "my_nori_tokenizer": {
+              "type": "nori_tokenizer",
+              "decompound_mode": "mixed",
+              "discard_punctuation": "false"
+            },
+            "my_ngram_tokenizer": {
+              "type": "ngram",
+              "min_gram": 2,
+              "max_gram": 3
+            }
+          },
+          "filter": {
+            "stopwords": {
+              "type": "stop",
+              "stopwords": " "
+            }
+          },
+          "analyzer": {
+            "my_nori_analyzer": {
+              "type": "custom",
+              "tokenizer": "my_nori_tokenizer",
+              "filter": ["lowercase", "stop", "trim", "stopwords", "nori_part_of_speech"],
+              "char_filter": ["html_strip"]
+            },
+            "my_ngram_analyzer": {
+              "type": "custom",
+              "tokenizer": "my_ngram_tokenizer",
+              "filter": ["lowercase", "stop", "trim", "stopwords", "nori_part_of_speech"],
+              "char_filter": ["html_strip"]
+            }
+          }
+        }
+      }
+    },
+    "mappings": {
+      "properties": {
+        "difficultylevel": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "enddate": {
+          "type": "date"
+        },
+        "genres": {
+          "properties": {
+            "categoryId": {
+              "type": "long"
+            },
+            "genre": {
+              "type": "text",
+              "fields": {
+                "nori": {
+                  "type": "text",
+                  "analyzer": "my_nori_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                },
+                "ngram": {
+                  "type": "text",
+                  "analyzer": "my_ngram_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                }
+              }
+            }
+          }
+        },
+        "id": {
+          "type": "long"
+        },
+        "isgroup": {
+          "type": "boolean"
+        },
+        "lectureimages_string": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "lecturemethod": {
+          "type": "text",
+          "fields": {
+            "nori": {
+              "type": "text",
+              "analyzer": "my_nori_analyzer",
+              "search_analyzer": "my_ngram_analyzer"
+            },
+            "ngram": {
+              "type": "text",
+              "analyzer": "my_ngram_analyzer",
+              "search_analyzer": "my_ngram_analyzer"
+            }
+          }
+        },
+        "lecturer": {
+          "properties": {
+            "lecturerId": {
+              "type": "long"
+            },
+            "nickname": {
+              "type": "text",
+              "fields": {
+                "nori": {
+                  "type": "text",
+                  "analyzer": "my_nori_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                },
+                "ngram": {
+                  "type": "text",
+                  "analyzer": "my_ngram_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                }
+              }
+            },
+            "profileCardImageUrl": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "price": {
+          "type": "long"
+        },
+        "regions": {
+          "properties": {
+            "administrativeDistrict": {
+              "type": "text",
+              "fields": {
+                "nori": {
+                  "type": "text",
+                  "analyzer": "my_nori_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                },
+                "ngram": {
+                  "type": "text",
+                  "analyzer": "my_ngram_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                }
+              }
+            },
+            "district": {
+              "type": "text",
+              "fields": {
+                "nori": {
+                  "type": "text",
+                  "analyzer": "my_nori_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                },
+                "ngram": {
+                  "type": "text",
+                  "analyzer": "my_ngram_analyzer",
+                  "search_analyzer": "my_ngram_analyzer"
+                }
+              }
+            },
+            "regionId": {
+              "type": "long"
+            }
+          }
+        },
+        "reviewcount": {
+          "type": "long"
+        },
+        "stars": {
+          "type": "long"
+        },
+        "startdate": {
+          "type": "date"
+        },
+        "title": {
+          "type": "text",
+          "fields": {
+            "nori": {
+              "type": "text",
+              "analyzer": "my_nori_analyzer",
+              "search_analyzer": "my_ngram_analyzer"
+            },
+            "ngram": {
+              "type": "text",
+              "analyzer": "my_ngram_analyzer",
+              "search_analyzer": "my_ngram_analyzer"
+            }
+          }
+        },
+        "updatedat": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
