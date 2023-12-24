@@ -78,6 +78,9 @@
         },
         "updatedat": {
           "type": "date"
+        },
+        "lecturerImages": {
+          "type": "text"
         }
       }
     }
