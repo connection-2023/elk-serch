@@ -197,6 +197,17 @@
         },
         "updatedat": {
           "type": "date"
+        },
+        "days": {
+          "properties": {
+            "day": {
+              "type": "keyword"
+            },
+            "dateTime": {
+              "type": "date",
+              "format": "hour_minute_second "
+            }
+          }
         }
       }
     }
