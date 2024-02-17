@@ -1,7 +1,6 @@
 {
-  "priority": 1,
-  "index_patterns": ["lecture"],
-  "template": {
+  "lecture_template": {
+    "index_patterns": ["lecture"],
     "settings": {
       "index": {
         "analysis": {
