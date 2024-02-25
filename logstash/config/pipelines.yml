@@ -4,3 +4,6 @@
 - pipeline.id: lecture
   path.config: "/usr/share/logstash/pipeline/lecture.conf"
   pipeline.workers: 1
+- pipeline.id: lecture_pass
+  path.config: "/usr/share/logstash/pipeline/lecture_pass.conf"
+  pipeline.workers: 1

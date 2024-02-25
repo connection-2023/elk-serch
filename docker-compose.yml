@@ -15,34 +15,34 @@ services:
   # due to the non-default profile it belongs to. To run it, either provide the
   # '--profile=setup' CLI flag to Compose commands, or "up" the service by name
   # such as 'docker compose up setup'.
-  setup:
-    profiles:
-      - setup
-    build:
-      context: setup/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
-    init: true
-    volumes:
-      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
-      - ./setup/lib.sh:/lib.sh:ro,Z
-      - ./setup/roles:/roles:ro,Z
-    environment:
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
-      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
-      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
-      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}
-      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
-      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
-      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
-      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
+  # setup:
+  #   profiles:
+  #     - setup
+  #   build:
+  #     context: setup/
+  #     args:
+  #       ELASTIC_VERSION: ${ELASTIC_VERSION}
+  #   init: true
+  #   volumes:
+  #     - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
+  #     - ./setup/lib.sh:/lib.sh:ro,Z
+  #     - ./setup/roles:/roles:ro,Z
+  #   environment:
+  #     ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+  #     LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+  #     KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+  #     METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}
+  #     FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
+  #     HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
+  #     MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
+  #     BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
 
-    networks:
-      - elk
-    depends_on:
-      # - elasticsearch
-      - kibana
-      - logstash
+  #   networks:
+  #     - elk
+  #   depends_on:
+  # - elasticsearch
+  # - kibana
+  # - logstash
 
   # elasticsearch:
   #   build:
@@ -50,24 +50,24 @@ services:
   #     args:
   #       ELASTIC_VERSION: ${ELASTIC_VERSION}
   #   volumes:
-  #     - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+  # - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
   #     - elasticsearch:/usr/share/elasticsearch/data:Z
   #   ports:
   #     - 9200:9200
-  #     - 9300:9300
+
   #   environment:
   #     node.name: elasticsearch
   #     ES_JAVA_OPTS: -Xms512m -Xmx512m
-  #     # Bootstrap password.
-  #     # Used to initialize the keystore during the initial startup of
-  #     # Elasticsearch. Ignored on subsequent runs.
-  #     ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
-  #     # Use single node discovery in order to disable production mode and avoid bootstrap checks.
-  #     # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-  #     discovery.type: single-node
-  #   networks:
-  #     - elk
-  #   restart: unless-stopped
+  # Bootstrap password.
+  # Used to initialize the keystore during the initial startup of
+  # Elasticsearch. Ignored on subsequent runs.
+  # ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+  # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+  # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+  #   discovery.type: single-node
+  # networks:
+  #   - elk
+  # restart: unless-stopped
 
   logstash:
     build:
@@ -78,8 +78,9 @@ services:
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro,Z
-      - ./logstash/lecturer_template.json:/usr/share/logstash/lecturer_template.json
-      - ./logstash/lecture_template.json:/usr/share/logstash/lecture_template.json
+      - ./logstash/lecturer.json:/usr/share/logstash/lecturer.json
+      - ./logstash/lecture.json:/usr/share/logstash/lecture.json
+      - ./logstash/lecture_pass.json:/usr/share/logstash/lecture_pass.json
 
     ports:
       - 5044:5044
@@ -121,6 +122,3 @@ services:
 networks:
   elk:
     driver: bridge
-
-volumes:
-  elasticsearch:
